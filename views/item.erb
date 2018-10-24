@@ -1,0 +1,25 @@
+<%= @first %>
+<%= @second %>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Weighted Average Price (r0)
+      </th>
+      <th>
+        Weighted Average Price (r3)
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <%= @second["wa_price"].to_i %>
+      </td>
+      <td>
+        <%= @first["wa_price"].to_i %>
+      </td>
+    <tr>
+  </tbody>
+</table>
