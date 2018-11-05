@@ -33,3 +33,22 @@ get "/endo" do
   end
   erb :ayatans
 end
+
+get "/arcanes" do
+  @results = {}
+  arcanes = %w(tempo momentum velocity guardian trickery ultimatum strike awakening acceleration fury avenger agility eruption rage precision consequence phantasm nullifier ice warmth arachne aegis barrier grace energize victory pulse healing deflection resistance)
+  arcanes.sort.each do |arcane|
+    address ="https://api.warframe.market/v1/items/arcane_#{arcane}/statistics"
+    response = HTTParty.get(address)
+    rank0 = response["payload"]["statistics_closed"]["90days"][1]
+    rank3 = response["payload"]["statistics_closed"]["90days"][0]
+    @results[arcane] = {
+      rank0_wa_price: rank0["wa_price"],
+      rank0_volume: rank0["volume"],
+      rank3_wa_price: rank3["wa_price"],
+      rank3_volume: rank3["volume"],
+      rank3_premium: (((rank3["wa_price"]/10) - rank0["wa_price"])/rank0["wa_price"])*100
+    }
+  end
+  erb :arcanes
+end
